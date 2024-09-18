@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000; /* Black background */
+    color: #f4f4f4; /* Light gray text color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; /* Added padding to ensure space around the container */
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f4f4f4; /* Light gray text color */
+}
+
+.container {
+    width: calc(100% - 20px); /* Increase width but leave space on all sides */
+    max-width: 1500px; /* Set a max width to prevent it from being too wide */
+    padding: 20px;
+    background-color: #333333; /* Dark gray background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto; /* Center the container */
+}
+
+.time-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #444444; /* Darker gray background */
+    margin-bottom: 20px;
+    border: 1px solid #555555; /* Slightly lighter gray border */
+    border-radius: 8px;
+}
+
+/* Parameters displayed in circles */
+.parameters {
+    display: flex;
+    justify-content: space-around; /* Space the circles evenly */
+    margin-bottom: 20px;
+}
+
+.data-box {
+    width: 300px; /* Increased size */
+    height: 300px; /* Increased size */
+    background-color: #555555; /* Dark gray background */
+    border: 8px solid red; /* Slightly lighter gray border */
+    border-radius: 50%; /* Make the box a circle */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.data-box strong {
+    font-size: 22px; /* Increased font size */
+    color: #FFA500; /* Orange text color */
+    margin-bottom: 10px;
+}
+
+.data-box span {
+    font-size: 40px; /* Increased font size */
+    color: #FFFF00; /* Yellow text color */
+    font-weight: bold;
+}
+
+/* Anomaly box */
+.results {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result-box {
+    padding: 25px;
+    background-color: #FF0000; /* Red background */
+    border-radius: 8px;
+    font-size: 18px;
+    color: #FFFFFF; /* White text color */
+    width: 50%; /* Reduced width of the result box */
+    margin: 0 auto; /* Center the result box */
+}
+
+.btn-container {
+    text-align: center;
+}
+
+.btn {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}

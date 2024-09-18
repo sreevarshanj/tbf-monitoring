@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIMEHEX - SIH 2024 - TBF Monitoring - CSV Mode</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        let index = 0;  // Start at the first row of the CSV
+
+        function fetchData() {
+            fetch(`/start/${index}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Update parameter values
+                    document.getElementById('time').innerHTML = data.time;
+                    document.getElementById('rpm').innerHTML = parseFloat(data.rpm).toFixed(2) + ' RPM';
+                    document.getElementById('temp').innerHTML = parseFloat(data.temp).toFixed(2) + ' °C';
+                    document.getElementById('humidity').innerHTML = parseFloat(data.humidity).toFixed(2) + ' %';
+                    document.getElementById('gasdifference').innerHTML = parseFloat(data.gasdifference).toFixed(2) + ' units';
+                    
+                    // Check if there is an anomaly
+                    const anomalyBox = document.getElementById('anomaly');
+                    if (data.anomaly === 0) {
+                        anomalyBox.innerHTML = "No anomaly detected!";
+                        anomalyBox.style.backgroundColor = "#28a745";  // Green for no anomaly
+                        anomalyBox.style.color = "#fff";
+                    } else {
+                        anomalyBox.innerHTML = "Anomaly detected in: " + data.anomaly_params;
+                        anomalyBox.style.backgroundColor = "#ff0000";  // Red for anomaly
+                        anomalyBox.style.color = "#fff";
+                    }
+
+                    // Change border colors based on anomalies in specific parameters
+                    const anomalyParams = data.anomaly_params.split(', '); // Array of anomaly parameters
+
+                    // Reset all borders to green (normal)
+                    document.getElementById('rpm-box').style.borderColor = 'green';
+                    document.getElementById('temp-box').style.borderColor = 'green';
+                    document.getElementById('humidity-box').style.borderColor = 'green';
+                    document.getElementById('gasdifference-box').style.borderColor = 'green';
+
+                    // Set border color to red for parameters with anomalies
+                    if (anomalyParams.includes('RPM')) {
+                        document.getElementById('rpm-box').style.borderColor = 'red';
+                    }
+                    if (anomalyParams.includes('Temperature')) {
+                        document.getElementById('temp-box').style.borderColor = 'red';
+                    }
+                    if (anomalyParams.includes('Humidity')) {
+                        document.getElementById('humidity-box').style.borderColor = 'red';
+                    }
+                    if (anomalyParams.includes('Gas Difference')) {
+                        document.getElementById('gasdifference-box').style.borderColor = 'red';
+                    }
+
+                    index++;  // Move to the next row for the next fetch
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Fetch data every 5 seconds
+        setInterval(fetchData, 2000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>PRIMEHEX - SIH 2024 - TBF Monitoring</h1>
+        <div class="time-box">
+            <strong>Time: </strong>
+            <span id="time">No data</span>
+        </div>
+        <h2>Live Parameters</h2>
+        <div class="parameters">
+            <div class="data-box" id="rpm-box">
+                <strong>RPM:</strong>
+                <span id="rpm">No data</span>
+            </div>
+            <div class="data-box" id="temp-box">
+                <strong>Temperature:</strong>
+                <span id="temp">No data</span>
+            </div>
+            <div class="data-box" id="humidity-box">
+                <strong>Humidity:</strong>
+                <span id="humidity">No data</span>
+            </div>
+            <div class="data-box" id="gasdifference-box">
+                <strong>Gas Difference:</strong>
+                <span id="gasdifference">No data</span>
+            </div>
+        </div>
+        <h2>Predicted Anomaly</h2>
+        <div class="results">
+            <div class="result-box" id="anomaly">No anomaly yet.</div>
+        </div>
+    </div>
+    <script src="https://cdn.botpress.cloud/webchat/v2.1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/eae5106f-4aed-4b79-8bdb-8f8f932d2ea6/webchat/v2.1/config.js"></script>
+</body>
+</html>
+
